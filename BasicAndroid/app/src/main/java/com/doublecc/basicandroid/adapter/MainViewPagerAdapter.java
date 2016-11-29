@@ -4,34 +4,32 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.doublecc.yiyuannews.bean.BeanChannel;
-import com.doublecc.yiyuannews.fragment.NewsFragment;
-
-import java.util.List;
+import com.doublecc.basicandroid.module.main.TechnologyFragment;
 
 /**
  * 主viewpager适配
  */
 
 public class MainViewPagerAdapter extends FragmentPagerAdapter {
-    private List<BeanChannel> tabName;
-    public MainViewPagerAdapter(FragmentManager fm, List<BeanChannel> tabName) {
+
+    private String[] mLableList;
+    public MainViewPagerAdapter(FragmentManager fm,String[] mLableList) {
         super(fm);
-        this.tabName = tabName;
+        this.mLableList = mLableList;
     }
 
     @Override
     public Fragment getItem(int position) {
-        return NewsFragment.getNewsFragment(tabName.get(position));
+        return TechnologyFragment.getTechnologyFragment();
     }
 
     @Override
     public int getCount() {
-        return tabName.size();
+        return mLableList.length;
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return tabName.get(position).name;
+        return mLableList[position];
     }
 }

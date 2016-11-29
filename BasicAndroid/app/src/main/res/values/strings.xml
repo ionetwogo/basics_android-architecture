@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">BasicAndroid</string>
+    <string-array name="technology_lable">
+        <item >Android</item>
+        <item >IOS</item>
+        <item >前端</item>
+    </string-array>
 </resources>

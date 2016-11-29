@@ -5,4 +5,7 @@ package com.doublecc.basicandroid.module.base;
  */
 
 public interface BaseModule {
+    interface mainModule{
+        void getInfo();
+    }
 }

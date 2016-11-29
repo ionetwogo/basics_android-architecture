@@ -5,4 +5,8 @@ package com.doublecc.basicandroid.module.base;
  */
 
 public interface BasePresenter {
+
+    interface mainPresenter{
+        void requestData();
+    }
 }
