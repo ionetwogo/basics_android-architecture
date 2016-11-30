@@ -10,17 +10,23 @@
     <RelativeLayout
         android:id="@+id/rl_menu"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/reside_bg">
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginLeft="25dp"
             android:orientation="horizontal">
-            <ImageView
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/img_avatar"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
+                android:src="@mipmap/avatar"
+                app:civ_border_width="2dp"
+                app:civ_border_color="#80FFFFFF"
                 />
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -34,15 +40,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="name"
-                    android:textSize="16sp"
+                    android:textSize="20sp"
                     />
                 <TextView
                     android:id="@+id/tv_description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="description"
-                    android:textSize="13sp"
-                    android:layout_marginTop="15dp"
+                    android:textSize="16sp"
+                    android:layout_marginTop="10dp"
                     />
             </LinearLayout>
         </LinearLayout>
@@ -51,6 +57,29 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            android:gravity="center_vertical"
+            android:background="@color/colorBrownPrimary">
+
+            <ImageView
+                    android:id="@+id/img_lableIcon"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="@mipmap/icon_menu"/>
+
+            <TextView
+                android:id="@+id/tv_lableTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Android"
+                android:textSize="18sp"
+                android:layout_marginLeft="10dp"
+                android:textColor="@android:color/white"/>
+        </LinearLayout>
         <com.astuetz.PagerSlidingTabStrip
             android:id="@+id/tabstrip"
             android:layout_width="match_parent"
@@ -61,7 +90,8 @@
         <android.support.v4.view.ViewPager
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@android:color/white">
 
         </android.support.v4.view.ViewPager>
     </LinearLayout>

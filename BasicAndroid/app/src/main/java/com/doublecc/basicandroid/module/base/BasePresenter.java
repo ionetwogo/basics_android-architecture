@@ -7,6 +7,6 @@ package com.doublecc.basicandroid.module.base;
 public interface BasePresenter {
 
     interface mainPresenter{
-        void requestData();
+        void requestData(int number, int page);
     }
 }

@@ -6,6 +6,6 @@ package com.doublecc.basicandroid.module.base;
 
 public interface BaseModule {
     interface mainModule{
-        void getInfo();
+        void getInfo(int number, int page, final BaseDataBridge.TechnologyInfo technologyInfo);
     }
 }

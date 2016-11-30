@@ -6,4 +6,5 @@
     <color name="colorBrownPrimary">#795548</color>
     <color name="colorBrownPrimaryDark">#5D4037</color>
     <color name="colorBrownPrimaryCenter">#431d12</color>
+    <color name="black">#040404</color>
 </resources>
