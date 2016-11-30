@@ -17,6 +17,7 @@ import butterknife.ButterKnife;
 public abstract class BaseFragment extends Fragment {
 
     public abstract int getContentViewId();
+    public abstract void getData();
     protected Context mContext;
     protected View mRootView;
 
@@ -26,6 +27,7 @@ public abstract class BaseFragment extends Fragment {
         mRootView = inflater.inflate(getContentViewId(),container,false);
         ButterKnife.bind(this,mRootView);
         this.mContext = getActivity();
+        getData();
         return mRootView;
     }
 }

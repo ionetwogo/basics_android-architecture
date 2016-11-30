@@ -13,19 +13,18 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.doublecc.basicandroid.R;
 import com.doublecc.basicandroid.adapter.MainViewPagerAdapter;
 import com.doublecc.basicandroid.module.base.BaseActivity;
-import com.doublecc.basicandroid.module.base.BaseView;
-
-import java.util.ArrayList;
 
 import butterknife.BindArray;
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MainActivity extends BaseActivity implements BaseView.main{
+public class MainActivity extends BaseActivity{
 
     @BindView(R.id.rl_menu)
     RelativeLayout mRlMenu;
     @BindView(R.id.img_avatar)
-    ImageView mImgAvatar;
+    CircleImageView mImgAvatar;
     @BindView(R.id.tv_name)
     TextView mTvName;
     @BindView(R.id.tv_description)
@@ -36,6 +35,10 @@ public class MainActivity extends BaseActivity implements BaseView.main{
     ViewPager mViewPager;
     @BindArray(R.array.technology_lable)
     String[] lableStr;
+    @BindView(R.id.img_lableIcon)
+    ImageView mImgLableIcon;
+    @BindView(R.id.tv_lableTitle)
+    TextView mTvLableTitle;
 
     private MainViewPagerAdapter mAdapter;
 
@@ -43,6 +46,7 @@ public class MainActivity extends BaseActivity implements BaseView.main{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
         getData();
     }
 
@@ -50,17 +54,23 @@ public class MainActivity extends BaseActivity implements BaseView.main{
         mAdapter = new MainViewPagerAdapter(getSupportFragmentManager(),lableStr);
         mViewPager.setAdapter(mAdapter);
         mTabStrip.setViewPager(mViewPager);
+        mTabStrip.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                mTvLableTitle.setText(lableStr[position]);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         initTabsValue();
-    }
-
-    @Override
-    public void onSuccessInfo() {
-
-    }
-
-    @Override
-    public void onFailure() {
-
     }
 
     /**

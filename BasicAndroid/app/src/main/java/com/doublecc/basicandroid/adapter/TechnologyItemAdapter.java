@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.doublecc.basicandroid.R;
+import com.doublecc.basicandroid.bean.BeanBeauty;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,10 +23,12 @@ public class TechnologyItemAdapter extends RecyclerView.Adapter<TechnologyItemAd
 
     private Context mContext;
     private LayoutInflater inflater;
+    private List<BeanBeauty> mList;
 
-    public TechnologyItemAdapter(Context mContext) {
+    public TechnologyItemAdapter(Context mContext,List<BeanBeauty> list) {
         this.mContext = mContext;
         this.inflater = LayoutInflater.from(mContext);
+        this.mList = list;
     }
 
     @Override
@@ -35,12 +40,14 @@ public class TechnologyItemAdapter extends RecyclerView.Adapter<TechnologyItemAd
 
     @Override
     public void onBindViewHolder(Viewholder holder, int position) {
-        holder.mTvType.setText("");
+        holder.mTvType.setText(mList.get(position).type);
+        holder.mTvTitle.setText(mList.get(position).desc);
+        holder.mTvAuthor.setText(mList.get(position).who);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mList.size();
     }
 
     static class Viewholder extends RecyclerView.ViewHolder{
