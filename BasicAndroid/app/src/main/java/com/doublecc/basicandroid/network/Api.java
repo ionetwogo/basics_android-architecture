@@ -7,4 +7,7 @@ package com.doublecc.basicandroid.network;
 public class Api {
     public static final String BASE_URL = "http://gank.io/api/";
     public static final String BEAUTY = "data/福利";
+    public static final String TECHNOLOGY_ANDROID = "data/Android";
+    public static final String TECHNOLOGY_IOS = "data/iOS";
+    public static final String TECHNOLOGY_FRONT = "data/前端";
 }

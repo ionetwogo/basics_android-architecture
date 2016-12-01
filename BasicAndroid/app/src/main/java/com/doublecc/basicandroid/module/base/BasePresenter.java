@@ -7,6 +7,9 @@ package com.doublecc.basicandroid.module.base;
 public interface BasePresenter {
 
     interface mainPresenter{
-        void requestData(int number, int page);
+        void requestData(String url,int number, int page);
+    }
+    interface beautyPresenter{
+        void requestData(String url,int number, int page);
     }
 }

@@ -11,11 +11,13 @@ import android.widget.Toast;
 
 import com.doublecc.basicandroid.R;
 import com.doublecc.basicandroid.adapter.TechnologyItemAdapter;
-import com.doublecc.basicandroid.bean.BeanBeauty;
+import com.doublecc.basicandroid.bean.BeanTechnology;
 import com.doublecc.basicandroid.module.base.BaseFragment;
 import com.doublecc.basicandroid.module.base.BasePresenter;
 import com.doublecc.basicandroid.module.base.BaseView;
+import com.doublecc.basicandroid.network.Api;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -25,15 +27,18 @@ import butterknife.BindView;
  */
 
 public class TechnologyFragment extends BaseFragment implements BaseView.main{
-
+    private static final String ARG_POSITION = "argment_position";
+    private int position;
     private TechnologyItemAdapter technologyItemAdapter;
     private BasePresenter.mainPresenter mainPresenter;
+    private List<BeanTechnology> technologyList;
     @BindView(R.id.recycleView)
     RecyclerView recyclerView;
 
-    public static TechnologyFragment getTechnologyFragment() {
+    public static TechnologyFragment getTechnologyFragment(int position) {
         TechnologyFragment fragment = new TechnologyFragment();
         Bundle bundle = new Bundle();
+        bundle.putInt(ARG_POSITION,position);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -41,14 +46,13 @@ public class TechnologyFragment extends BaseFragment implements BaseView.main{
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        position = getArguments().getInt(ARG_POSITION);
         mainPresenter = new MainPresenterImpl(this);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        getData();
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -59,14 +63,33 @@ public class TechnologyFragment extends BaseFragment implements BaseView.main{
 
     @Override
     public void getData() {
-        mainPresenter.requestData(15,1);
+        switch (position){
+            case 0:
+                mainPresenter.requestData(Api.TECHNOLOGY_ANDROID,15,1);
+                break;
+            case 1:
+                mainPresenter.requestData(Api.TECHNOLOGY_IOS,15,1);
+                break;
+            case 2:
+                mainPresenter.requestData(Api.TECHNOLOGY_FRONT,15,1);
+                break;
+        }
     }
 
     @Override
-    public void onSuccessInfo(List<BeanBeauty> list) {
-        technologyItemAdapter = new TechnologyItemAdapter(mContext,list);
+    public void initView() {
+        technologyList = new ArrayList<BeanTechnology>();
+        technologyItemAdapter = new TechnologyItemAdapter(mContext,technologyList);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.setAdapter(technologyItemAdapter);
+    }
+
+    @Override
+    public void onSuccessInfo(List<BeanTechnology> list) {
+        technologyList.addAll(list);
+        if (technologyItemAdapter != null){
+            technologyItemAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override

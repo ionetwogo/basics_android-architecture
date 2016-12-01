@@ -20,7 +20,7 @@ public class MainViewPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return TechnologyFragment.getTechnologyFragment();
+        return TechnologyFragment.getTechnologyFragment(position);
     }
 
     @Override
