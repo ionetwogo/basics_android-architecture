@@ -1,46 +1,47 @@
 package com.doublecc.basicandroid.module.main;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
-import android.util.TypedValue;
+import android.support.v4.app.Fragment;
+import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.astuetz.PagerSlidingTabStrip;
 import com.doublecc.basicandroid.R;
-import com.doublecc.basicandroid.adapter.MainViewPagerAdapter;
 import com.doublecc.basicandroid.module.base.BaseActivity;
+import com.doublecc.basicandroid.module.beauty.BeautyFragment;
+import com.doublecc.basicandroid.widget.ResideLayout;
 
-import butterknife.BindArray;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends BaseActivity{
 
-    @BindView(R.id.rl_menu)
-    RelativeLayout mRlMenu;
+    @BindView(R.id.ll_menu)
+    LinearLayout mRlMenu;
     @BindView(R.id.img_avatar)
     CircleImageView mImgAvatar;
     @BindView(R.id.tv_name)
     TextView mTvName;
     @BindView(R.id.tv_description)
     TextView mTvDescription;
-    @BindView(R.id.tabstrip)
-    PagerSlidingTabStrip mTabStrip;
-    @BindView(R.id.viewpager)
-    ViewPager mViewPager;
-    @BindArray(R.array.technology_lable)
-    String[] lableStr;
     @BindView(R.id.img_lableIcon)
     ImageView mImgLableIcon;
     @BindView(R.id.tv_lableTitle)
     TextView mTvLableTitle;
+    @BindView(R.id.resideLayout)
+    ResideLayout resideLayout;
+    @BindView(R.id.mainfragment)
+    FrameLayout mFragment;
+    @BindView(R.id.tv_technology)
+    TextView mTvTechnology;
+    @BindView(R.id.tv_beauty)
+    TextView mTvBeauty;
 
-    private MainViewPagerAdapter mAdapter;
+    private Fragment currentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,47 +52,46 @@ public class MainActivity extends BaseActivity{
     }
 
     private void getData() {
-        mAdapter = new MainViewPagerAdapter(getSupportFragmentManager(),lableStr);
-        mViewPager.setAdapter(mAdapter);
-        mTabStrip.setViewPager(mViewPager);
-        mTabStrip.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                mTvLableTitle.setText(lableStr[position]);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-        initTabsValue();
+        switchFragment(new MainFragment());
     }
 
-    /**
-     * mPagerSlidingTabStrip默认值配置
-     *
-     */
-    private void initTabsValue() {
-        // 底部游标颜色
-        mTabStrip.setIndicatorColor(R.color.colorBrownPrimaryDark);
-        // tab的分割线颜色
-        mTabStrip.setDividerColor(Color.TRANSPARENT);
-        // tab背景
-        mTabStrip.setBackgroundColor(ContextCompat.getColor(this,R.color.colorBrownPrimary));
-        // tab底线高度
-        mTabStrip.setUnderlineHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-                1, getResources().getDisplayMetrics()));
-        // 游标高度
-        mTabStrip.setIndicatorHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-                5, getResources().getDisplayMetrics()));
-
-        // 正常文字颜色
-        mTabStrip.setTextColor(Color.WHITE);
+    @OnClick({R.id.img_lableIcon,R.id.tv_technology,R.id.tv_beauty})
+    public void OnClick(View view){
+        switch (view.getId()){
+            case R.id.img_lableIcon:
+                resideLayout.openPane();
+                break;
+            case R.id.tv_technology:
+                mTvLableTitle.setText("技术");
+                resideLayout.closePane();
+                switchFragment(new MainFragment());
+                break;
+            case R.id.tv_beauty:
+                mTvLableTitle.setText("福利");
+                resideLayout.closePane();
+                switchFragment(new BeautyFragment());
+                break;
+        }
     }
+
+    private void switchFragment(Fragment fragment) {
+        if (currentFragment == null || !fragment.getClass().getName().equals(currentFragment.getClass().getName())) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.mainfragment, fragment).commit();
+            currentFragment = fragment;
+            if (currentFragment instanceof MainFragment){
+                ((MainFragment) currentFragment).setPageSelectListener(new MainFragment.pageSelectListener() {
+                    @Override
+                    public void openSlide() {
+                        resideLayout.openSlide();
+                    }
+
+                    @Override
+                    public void closeSlide() {
+                        resideLayout.closeSlide();
+                    }
+                });
+            }
+        }
+    }
+
 }

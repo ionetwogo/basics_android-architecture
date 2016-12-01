@@ -1,8 +1,8 @@
 package com.doublecc.basicandroid.module.main;
 
-import com.doublecc.basicandroid.bean.BeanBeauty;
+import com.doublecc.basicandroid.bean.BeanTechnology;
 import com.doublecc.basicandroid.module.base.BaseDataBridge;
-import com.doublecc.basicandroid.module.base.BaseModule;
+import com.doublecc.basicandroid.module.base.BaseModel;
 import com.doublecc.basicandroid.module.base.BasePresenter;
 import com.doublecc.basicandroid.module.base.BasePresenterImpl;
 
@@ -14,22 +14,22 @@ import java.util.List;
 
 public class MainPresenterImpl extends BasePresenterImpl implements BasePresenter.mainPresenter,BaseDataBridge.TechnologyInfo{
 
-    private BaseModule.mainModule mainModule;
+    private BaseModel.mainModel mainModel;
     private TechnologyFragment fragment;
 
     public MainPresenterImpl(TechnologyFragment view) {
         super(view);
         this.fragment = view;
-        mainModule = new MainModuleImpl();
+        mainModel = new MainModelImpl();
     }
 
     @Override
-    public void requestData(int number, int page) {
-        mainModule.getInfo(number,page,this);
+    public void requestData(String url,int number, int page) {
+        mainModel.getInfo(url,number,page,this);
     }
 
     @Override
-    public void successRequest(List<BeanBeauty> list) {
+    public void successRequest(List<BeanTechnology> list) {
         fragment.onSuccessInfo(list);
     }
 

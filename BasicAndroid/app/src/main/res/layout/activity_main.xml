@@ -4,19 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/activity_main"
+    android:id="@+id/resideLayout"
     tools:context="com.doublecc.basicandroid.module.main.MainActivity">
 
-    <RelativeLayout
-        android:id="@+id/rl_menu"
+    <LinearLayout
+        android:id="@+id/ll_menu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="25dp"
+        android:paddingLeft="25dp"
         android:background="@drawable/reside_bg">
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="25dp"
             android:orientation="horizontal">
 
             <de.hdodenhof.circleimageview.CircleImageView
@@ -52,7 +53,27 @@
                     />
             </LinearLayout>
         </LinearLayout>
-    </RelativeLayout>
+        <TextView
+            android:id="@+id/tv_technology"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="技术"
+            android:layout_marginTop="35dp"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"/>
+        <TextView
+            android:id="@+id/tv_beauty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="福利"
+            android:layout_marginTop="10dp"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"/>
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -75,25 +96,16 @@
                 android:id="@+id/tv_lableTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Android"
+                android:text="技术"
                 android:textSize="18sp"
                 android:layout_marginLeft="10dp"
                 android:textColor="@android:color/white"/>
         </LinearLayout>
-        <com.astuetz.PagerSlidingTabStrip
-            android:id="@+id/tabstrip"
+        <FrameLayout
+            android:id="@+id/mainfragment"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            >
-
-        </com.astuetz.PagerSlidingTabStrip>
-        <android.support.v4.view.ViewPager
-            android:id="@+id/viewpager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/white">
-
-        </android.support.v4.view.ViewPager>
+            android:layout_height="match_parent">
+        </FrameLayout>
     </LinearLayout>
 
 </com.doublecc.basicandroid.widget.ResideLayout>

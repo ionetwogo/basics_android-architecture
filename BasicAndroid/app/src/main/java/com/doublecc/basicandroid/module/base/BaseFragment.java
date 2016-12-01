@@ -18,15 +18,22 @@ public abstract class BaseFragment extends Fragment {
 
     public abstract int getContentViewId();
     public abstract void getData();
+    public abstract void initView();
     protected Context mContext;
     protected View mRootView;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        this.mContext = getActivity();
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mRootView = inflater.inflate(getContentViewId(),container,false);
         ButterKnife.bind(this,mRootView);
-        this.mContext = getActivity();
+        initView();
         getData();
         return mRootView;
     }

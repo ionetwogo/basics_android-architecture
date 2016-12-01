@@ -1,6 +1,7 @@
 package com.doublecc.basicandroid.module.base;
 
 import com.doublecc.basicandroid.bean.BeanBeauty;
+import com.doublecc.basicandroid.bean.BeanTechnology;
 
 import java.util.List;
 
@@ -11,6 +12,9 @@ import java.util.List;
 public interface BaseDataBridge {
     void failureRequest(String message);
     interface TechnologyInfo extends BaseDataBridge{
+        void successRequest(List<BeanTechnology> list);
+    }
+    interface BeautyInfo extends BaseDataBridge{
         void successRequest(List<BeanBeauty> list);
     }
 }

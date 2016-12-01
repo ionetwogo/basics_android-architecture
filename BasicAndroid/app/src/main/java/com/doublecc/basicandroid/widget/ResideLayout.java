@@ -663,7 +663,9 @@ public class ResideLayout extends ViewGroup {
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         final int action = MotionEventCompat.getActionMasked(ev);
-
+        if (canSlide == false && mPreservedOpenState == false){
+            return false;
+        }
         // Preserve the open state based on the last view that was touched.
         if (!mCanSlide && action == MotionEvent.ACTION_DOWN && getChildCount() > 1) {
             // After the first things will be slideable.
@@ -718,6 +720,13 @@ public class ResideLayout extends ViewGroup {
         final boolean interceptForDrag = mDragHelper.shouldInterceptTouchEvent(ev);
 
         return interceptForDrag || interceptTap;
+    }
+    private boolean canSlide = true;
+    public void openSlide(){
+        this.canSlide = true;
+    }
+    public void closeSlide(){
+        this.canSlide = false;
     }
 
     @Override

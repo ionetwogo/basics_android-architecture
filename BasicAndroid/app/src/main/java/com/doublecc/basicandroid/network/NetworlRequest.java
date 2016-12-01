@@ -7,9 +7,11 @@ import rx.Subscriber;
  */
 
 public class NetworlRequest {
-
-    public static void executeGetRequest(String url, int number, int page, Subscriber subscriber){
-        GankApiService apiService = RetrofitClient.createService(GankApiService.class);
+    private static GankApiService apiService = RetrofitClient.createService(GankApiService.class);
+    public static void executeGetBeauty(String url, int number, int page, Subscriber subscriber){
         RetrofitClient.execute(apiService.getBeauties(url,number,page),subscriber);
+    }
+    public static void executeGetTechnolgy(String url, int number, int page, Subscriber subscriber){
+        RetrofitClient.execute(apiService.getTechnology(url,number,page),subscriber);
     }
 }

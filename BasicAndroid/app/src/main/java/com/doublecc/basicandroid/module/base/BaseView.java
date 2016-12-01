@@ -1,6 +1,7 @@
 package com.doublecc.basicandroid.module.base;
 
 import com.doublecc.basicandroid.bean.BeanBeauty;
+import com.doublecc.basicandroid.bean.BeanTechnology;
 
 import java.util.List;
 
@@ -13,6 +14,10 @@ public interface BaseView {
     void onFailure(String message);
 
     interface main extends BaseView{
+        void onSuccessInfo(List<BeanTechnology> list);
+    }
+
+    interface beauty extends BaseView{
         void onSuccessInfo(List<BeanBeauty> list);
     }
 }
