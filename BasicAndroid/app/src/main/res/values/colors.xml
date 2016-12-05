@@ -7,4 +7,11 @@
     <color name="colorBrownPrimaryDark">#5D4037</color>
     <color name="colorBrownPrimaryCenter">#431d12</color>
     <color name="black">#040404</color>
+    <!-- titlebar -->
+    <color name="titlebar_btn_nor">#795548</color>
+    <color name="titlebar_btn_pres">#5D4037</color>
+    <color name="White">#FFFFFFFF</color>
+    <color name="titleTextColor">#795548</color>
+    <color name="leftTextColor">#795548</color>
+    <color name="rightTextColor">#795548</color>
 </resources>
