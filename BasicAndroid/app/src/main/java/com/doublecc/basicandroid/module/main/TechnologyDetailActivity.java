@@ -6,6 +6,7 @@ import android.widget.TextView;
 import com.doublecc.basicandroid.R;
 import com.doublecc.basicandroid.bean.BeanTechnology;
 import com.doublecc.basicandroid.module.base.BaseActivity;
+import com.doublecc.basicandroid.widget.TitleBar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,6 +30,8 @@ public class TechnologyDetailActivity extends BaseActivity{
     TextView mTvType;
     @BindView(R.id.tv_line)
     TextView mTvLine;
+    @BindView(R.id.titlebar)
+    TitleBar titleBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,5 +49,18 @@ public class TechnologyDetailActivity extends BaseActivity{
         mTvTime.setText(technology.createdAt);
         mTvType.setText(technology.type);
         mTvLine.setText(technology.url);
+
+        titleBar.setOnTitleBarClickListener(new TitleBar.titlebarClickListener() {
+            @Override
+            public void leftClick() {
+                // 左边按钮点击操作
+            }
+
+            @Override
+            public void rightClick() {
+                // 右边按钮点击操作
+            }
+        });
+        titleBar.setButtonVisable(true,false);
     }
 }
