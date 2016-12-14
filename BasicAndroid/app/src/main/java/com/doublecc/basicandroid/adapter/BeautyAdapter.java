@@ -1,14 +1,20 @@
 package com.doublecc.basicandroid.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.doublecc.basicandroid.R;
 import com.doublecc.basicandroid.bean.BeanBeauty;
+import com.doublecc.basicandroid.module.beauty.PhotoViewActivity;
 import com.doublecc.basicandroid.widget.ResizableImageView;
 
 import java.util.List;
@@ -40,12 +46,21 @@ public class BeautyAdapter extends RecyclerView.Adapter<BeautyAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        Glide.with(mContext).load(mBeautyList.get(position).url).into(holder.mImgBeauty);
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
+        Glide.with(mContext).load(mBeautyList.get(position).url).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.mImgBeauty);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(mContext, PhotoViewActivity.class);
+                intent.putExtra(PhotoViewActivity.PHOTO_URL,mBeautyList.get(position).url);
+                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext,holder.mImgBeauty,PhotoViewActivity.TRANSIT_PHOTO);
+                // 这种切换效果有版本要求
+                try{
+                    ActivityCompat.startActivity(mContext,intent,optionsCompat.toBundle());
+                }catch (IllegalArgumentException e){
+                    e.printStackTrace();
+                    mContext.startActivity(intent);
+                }
             }
         });
     }
