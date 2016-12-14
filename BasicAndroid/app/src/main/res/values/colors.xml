@@ -14,4 +14,7 @@
     <color name="titleTextColor">#795548</color>
     <color name="leftTextColor">#795548</color>
     <color name="rightTextColor">#795548</color>
+
+    <!-- 黑色透明 -->
+    <color name="Translucent">#b0000000</color>
 </resources>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BasicAndroid</string>
+    <string name="app_name">myGank</string>
     <string-array name="technology_lable">
         <item >Android</item>
         <item >IOS</item>

@@ -19,6 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".module.main.TechnologyDetailActivity"></activity>
+        <activity android:name=".module.beauty.PhotoViewActivity"></activity>
     </application>
 
 </manifest>

@@ -42,6 +42,8 @@ public class MainActivity extends BaseActivity{
     TextView mTvBeauty;
 
     private Fragment currentFragment;
+    private MainFragment mainFragment;
+    private BeautyFragment beautyFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +54,8 @@ public class MainActivity extends BaseActivity{
     }
 
     private void getData() {
-        switchFragment(new MainFragment());
+        if(mainFragment == null)mainFragment = new MainFragment();
+        switchFragment(mainFragment);
     }
 
     @OnClick({R.id.img_lableIcon,R.id.tv_technology,R.id.tv_beauty})
@@ -64,12 +67,14 @@ public class MainActivity extends BaseActivity{
             case R.id.tv_technology:
                 mTvLableTitle.setText("技术");
                 resideLayout.closePane();
-                switchFragment(new MainFragment());
+                if(mainFragment == null)mainFragment = new MainFragment();
+                switchFragment(mainFragment);
                 break;
             case R.id.tv_beauty:
                 mTvLableTitle.setText("福利");
                 resideLayout.closePane();
-                switchFragment(new BeautyFragment());
+                if (beautyFragment == null)beautyFragment = new BeautyFragment();
+                switchFragment(beautyFragment);
                 break;
         }
     }

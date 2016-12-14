@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
+import com.aspsine.swipetoloadlayout.OnRefreshListener;
+import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.doublecc.basicandroid.R;
 import com.doublecc.basicandroid.adapter.TechnologyItemAdapter;
 import com.doublecc.basicandroid.bean.BeanTechnology;
@@ -26,14 +29,19 @@ import butterknife.BindView;
  * Created by DoubleCC on 2016/11/29 0029.
  */
 
-public class TechnologyFragment extends BaseFragment implements BaseView.main{
+public class TechnologyFragment extends BaseFragment implements BaseView.main,OnRefreshListener,OnLoadMoreListener{
     private static final String ARG_POSITION = "argment_position";
     private int position;
     private TechnologyItemAdapter technologyItemAdapter;
     private BasePresenter.mainPresenter mainPresenter;
     private List<BeanTechnology> technologyList;
-    @BindView(R.id.recycleView)
+    @BindView(R.id.swipe_target)
     RecyclerView recyclerView;
+    @BindView(R.id.swipeToLoadLayout)
+    SwipeToLoadLayout swipeToLoadLayout;
+
+    private int pageSize = 20;
+    private int page = 1;
 
     public static TechnologyFragment getTechnologyFragment(int position) {
         TechnologyFragment fragment = new TechnologyFragment();
@@ -65,19 +73,28 @@ public class TechnologyFragment extends BaseFragment implements BaseView.main{
     public void getData() {
         switch (position){
             case 0:
-                mainPresenter.requestData(Api.TECHNOLOGY_ANDROID,15,1);
+                mainPresenter.requestData(Api.TECHNOLOGY_ANDROID,pageSize,page);
                 break;
             case 1:
-                mainPresenter.requestData(Api.TECHNOLOGY_IOS,15,1);
+                mainPresenter.requestData(Api.TECHNOLOGY_IOS,pageSize,page);
                 break;
             case 2:
-                mainPresenter.requestData(Api.TECHNOLOGY_FRONT,15,1);
+                mainPresenter.requestData(Api.TECHNOLOGY_FRONT,pageSize,page);
                 break;
         }
     }
 
     @Override
     public void initView() {
+        swipeToLoadLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                swipeToLoadLayout.setRefreshing(true);
+            }
+        });
+        swipeToLoadLayout.setOnRefreshListener(this);
+        swipeToLoadLayout.setOnLoadMoreListener(this);
+
         technologyList = new ArrayList<BeanTechnology>();
         technologyItemAdapter = new TechnologyItemAdapter(mContext,technologyList);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
@@ -86,14 +103,36 @@ public class TechnologyFragment extends BaseFragment implements BaseView.main{
 
     @Override
     public void onSuccessInfo(List<BeanTechnology> list) {
+        if (page == 1)technologyList.clear();
         technologyList.addAll(list);
         if (technologyItemAdapter != null){
             technologyItemAdapter.notifyDataSetChanged();
+        }
+        if (swipeToLoadLayout != null) {
+            swipeToLoadLayout.setRefreshing(false);
+            swipeToLoadLayout.setLoadingMore(false);
         }
     }
 
     @Override
     public void onFailure(String message) {
+        page --;
         Toast.makeText(mContext,message.toString(),Toast.LENGTH_SHORT).show();
+        if (swipeToLoadLayout != null) {
+            swipeToLoadLayout.setRefreshing(false);
+            swipeToLoadLayout.setLoadingMore(false);
+        }
+    }
+
+    @Override
+    public void onRefresh() {
+        page = 1;
+        getData();
+    }
+
+    @Override
+    public void onLoadMore() {
+        page ++;
+        getData();
     }
 }
