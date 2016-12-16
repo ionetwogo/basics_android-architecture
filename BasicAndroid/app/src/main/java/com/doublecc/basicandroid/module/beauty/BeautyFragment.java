@@ -35,6 +35,7 @@ public class BeautyFragment extends BaseFragment implements BaseView.beauty,OnRe
     private BasePresenter.beautyPresenter beautyPresenter;
     private BeautyAdapter beautyAdapter;
     private List<BeanBeauty> beautyList;
+    private StaggeredGridLayoutManager staggeredGridLayoutManager;
 
     private int pageSize = 20;
     private int page = 1;
@@ -68,8 +69,17 @@ public class BeautyFragment extends BaseFragment implements BaseView.beauty,OnRe
 
         beautyList = new ArrayList<>();
         beautyAdapter = new BeautyAdapter(mContext,beautyList);
-        mRvBeauty.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+        staggeredGridLayoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
+        staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
+        mRvBeauty.setLayoutManager(staggeredGridLayoutManager);
         mRvBeauty.setAdapter(beautyAdapter);
+        mRvBeauty.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                staggeredGridLayoutManager.invalidateSpanAssignments();
+            }
+        });
     }
 
     @Override

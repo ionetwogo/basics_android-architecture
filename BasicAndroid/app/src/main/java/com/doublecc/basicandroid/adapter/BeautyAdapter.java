@@ -12,6 +12,9 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.doublecc.basicandroid.R;
 import com.doublecc.basicandroid.bean.BeanBeauty;
 import com.doublecc.basicandroid.module.beauty.PhotoViewActivity;
@@ -47,7 +50,18 @@ public class BeautyAdapter extends RecyclerView.Adapter<BeautyAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        Glide.with(mContext).load(mBeautyList.get(position).url).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.mImgBeauty);
+        Glide.with(mContext)
+                .load(mBeautyList.get(position).url)
+                .placeholder(R.mipmap.maidou)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .crossFade()
+                .dontAnimate()
+                .into(new SimpleTarget<GlideDrawable>() {
+                    @Override
+                    public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+                        holder.mImgBeauty.setImageDrawable(resource);
+                    }
+                });
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
